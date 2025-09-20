@@ -1,6 +1,6 @@
 # Learn Gate API
 
-A simple REST API built with Fastify and TypeScript for managing courses. This API provides basic CRUD operations for course management.
+A simple REST API built with Fastify and TypeScript for managing courses. This API provides basic CRUD operations for course management with PostgreSQL database integration.
 
 ## Features
 
@@ -8,6 +8,9 @@ A simple REST API built with Fastify and TypeScript for managing courses. This A
 - **RESTful API**: Clean and intuitive endpoints
 - **TypeScript**: Type-safe development
 - **Fastify**: Fast and efficient web framework
+- **PostgreSQL Database**: Robust data persistence with PostgreSQL 17
+- **Drizzle ORM**: Type-safe database operations
+- **Docker Support**: Easy database setup with Docker Compose
 - **UUID Generation**: Unique identifiers for courses
 
 ## API Endpoints
@@ -47,6 +50,7 @@ Removes a course from the system.
 
 - Node.js (version 18 or higher)
 - pnpm (recommended) or npm
+- Docker and Docker Compose
 
 ### Installation
 
@@ -61,24 +65,59 @@ cd learn-gate-api
 pnpm install
 ```
 
+3. Set up the database:
+```bash
+# Start PostgreSQL with Docker Compose
+docker compose up -d
+
+# Run database migrations
+pnpm db:migrate
+```
+
 ### Running the Application
 
-Start the development server:
+1. Start the database (if not already running):
+```bash
+docker compose up -d
+```
+
+2. Start the development server:
 ```bash
 pnpm dev
 ```
 
 The server will start on `http://localhost:3333`
 
+### Database Configuration
+
+The application uses PostgreSQL 17 with the following configuration:
+- **Host**: localhost
+- **Port**: 5433
+- **Database**: learn_gate
+- **Username**: postgres
+- **Password**: learn-gate
+
+The database URL is configured in the `.env` file:
+```
+DATABASE_URL=postgresql://postgres:learn-gate@localhost:5433/learn_gate
+```
+
 ## Project Structure
 
 ```
 learn-gate-api/
-├── server.ts          # Main server file with API routes
-├── package.json       # Project dependencies and scripts
-├── tsconfig.json      # TypeScript configuration
-├── requests.http      # HTTP request examples for testing
-└── README.md          # This file
+├── src/
+│   └── database/
+│       └── schema.ts      # Database schema definitions
+├── drizzle/               # Database migration files
+├── server.ts              # Main server file with API routes
+├── docker-compose.yml     # PostgreSQL database configuration
+├── drizzle.config.ts      # Drizzle ORM configuration
+├── .env                   # Environment variables
+├── package.json           # Project dependencies and scripts
+├── tsconfig.json          # TypeScript configuration
+├── requests.http          # HTTP request examples for testing
+└── README.md              # This file
 ```
 
 ## Development
@@ -88,6 +127,9 @@ The project uses TypeScript with experimental strip types for development, allow
 ### Available Scripts
 
 - `pnpm dev`: Start the development server with hot reload
+- `pnpm db:migrate`: Run database migrations
+- `pnpm db:generate`: Generate new database migrations
+- `pnpm db:studio`: Open Drizzle Studio for database management
 
 ## Testing the API
 

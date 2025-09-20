@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: learn_gate
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: learn-gate
+    ports:
+      - "5433:5432"
+   

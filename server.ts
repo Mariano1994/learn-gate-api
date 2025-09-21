@@ -1,11 +1,32 @@
 import fastify from "fastify"
 import { db } from "./src/database/client.ts"
 import { courses } from "./src/database/schema.ts"
+import {serializerCompiler, validatorCompiler, type ZodTypeProvider, jsonSchemaTransform} from 'fastify-type-provider-zod'
 import {eq} from 'drizzle-orm'
+import {z} from 'zod'
+import {fastifySwagger} from '@fastify/swagger'
+import {fastifySwaggerUi} from '@fastify/swagger-ui'
 
 
-const server = fastify()
+const server = fastify().withTypeProvider<ZodTypeProvider>()
 
+server.setValidatorCompiler(validatorCompiler)
+server.setSerializerCompiler(serializerCompiler)
+
+server.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: 'Learn-gate-api',
+      version: "1.0.0"
+
+    }
+  },
+  transform: jsonSchemaTransform
+})
+
+server.register(fastifySwaggerUi, {
+  routePrefix: "/docs",
+})
 
  // Get all courses route
 server.get('/courses', async (request, replay)=> {
@@ -16,13 +37,16 @@ const result  = await db.select({
   return {courses: result}
 })
 
-// Get an individual course, according to course id
-server.get('/courses/:id', async (request, replay) => {
 
-type Parms = {
-  id: string
-}
-const {id} = request.params as Parms
+// Get an individual course, according to course id
+server.get('/courses/:id',{schema: {
+  params: z.object({
+    id: z.uuid()
+  })
+}}, async (request, replay) => {
+
+
+const {id} = request.params
 
 const course = await db.select().from(courses).where(eq(courses.id, id))
 if(course.length > 0) {
@@ -33,30 +57,29 @@ return replay.status(404).send('Course not found')
 })
 
 
-
 // Create a new courser
-server.post('/courses', async (request, reply)=> {
-  type Body = {
-    title: string,
-    description?: string
+server.post('/courses', {
+  schema: {
+    body: z.object({
+      title: z.string().min(5, 'Title needs to have at least 5 caracters'),
+      description: z.string().optional()
+    })
   }
-
-  const body = request.body as Body
-  const courseTitle = body.title
+}, async (request, reply)=> {
 
 
-  if(!courseTitle) {
-    return reply.status(400).send('Titilo obrigatorio')
-  }
+  const courseTitle = request.body.title
+
+
+ 
 
   const result = await db.insert(courses).values({
-    title: body.title,
-    description: body.description
+    title: request.body.title,
+    description: request.body.description
   }).returning()
 
   return reply.status(201).send({courseId: result[0].id })
 })
-
 
 
 // server.delete('/courses/:id', (request, replay) => {
@@ -75,8 +98,6 @@ server.post('/courses', async (request, reply)=> {
 //   return replay.status(404).send('Couser not found')
 
 // })
-
-
 
 
 server.listen({port: 3333}).then(() => {

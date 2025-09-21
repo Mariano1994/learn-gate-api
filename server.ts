@@ -1,70 +1,80 @@
 import fastify from "fastify"
-import crypto from 'node:crypto'
+import { db } from "./src/database/client.ts"
+import { courses } from "./src/database/schema.ts"
+import {eq} from 'drizzle-orm'
 
 
 const server = fastify()
 
 
-const courses = [
-  {id: crypto.randomUUID(), title: 'React Js'},
-  {id: crypto.randomUUID(), title: 'React Native'},
-  {id: crypto.randomUUID(), title: 'Node Js'},
-]
-
-server.get('/courses', ()=> {
-  return {courses}
+ // Get all courses route
+server.get('/courses', async (request, replay)=> {
+const result  = await db.select({
+  id: courses.id,
+  title: courses.title  
+}).from(courses)
+  return {courses: result}
 })
 
-server.post('/courses', (request, reply)=> {
-
-  type Body = {
-    title: string
-  }
-
-  const courseId = crypto.randomUUID();
-  const body = request.body as Body
-  const courseTitle = body.title
-  courses.push({id: courseId, title: courseTitle})
-
-  if(!courseTitle) {
-    return reply.status(400).send('Titilo obrigatorio')
-  }
-
-  return reply.status(201).send({courseId})
-})
-
-server.get('/courses/:id', (request, replay) => {
+// Get an individual course, according to course id
+server.get('/courses/:id', async (request, replay) => {
 
 type Parms = {
   id: string
 }
 const {id} = request.params as Parms
 
-const course = courses.find(course => course.id === id)
-
-if(course) {
-  return {course}
+const course = await db.select().from(courses).where(eq(courses.id, id))
+if(course.length > 0) {
+  return {course: course[0]}
 }
 
 return replay.status(404).send('Course not found')
 })
 
-server.delete('/courses/:id', (request, replay) => {
-  type Params = {
-    id: string
+
+
+// Create a new courser
+server.post('/courses', async (request, reply)=> {
+  type Body = {
+    title: string,
+    description?: string
   }
 
-  const {id} = request.params as Params
-  
-  const filteredCourses = courses.filter(course => course.id !== id)
+  const body = request.body as Body
+  const courseTitle = body.title
 
-  if(filteredCourses) {
-    return {filteredCourses}
+
+  if(!courseTitle) {
+    return reply.status(400).send('Titilo obrigatorio')
   }
 
-  return replay.status(404).send('Couser not found')
+  const result = await db.insert(courses).values({
+    title: body.title,
+    description: body.description
+  }).returning()
 
+  return reply.status(201).send({courseId: result[0].id })
 })
+
+
+
+// server.delete('/courses/:id', (request, replay) => {
+//   type Params = {
+//     id: string
+//   }
+
+//   const {id} = request.params as Params
+  
+//   const filteredCourses = courses.filter(course => course.id !== id)
+
+//   if(filteredCourses) {
+//     return {filteredCourses}
+//   }
+
+//   return replay.status(404).send('Couser not found')
+
+// })
 
 
 

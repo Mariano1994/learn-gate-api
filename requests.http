@@ -2,12 +2,12 @@ POST http://localhost:3333/courses
 Content-Type: application/json
 
 {
- "title": "AWS Course",
+ "title": "Angular",
  "description": "This the ultimate aws course, that will take you from zero to hero"
 
 }
 ####
-GET http://localhost:3333/courses
+GET http://localhost:3333/courses?page
 
 ### 
 GET http://localhost:3333/courses/80309d7c-d78c-4a50-b8d1-bd5e52142300

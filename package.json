@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --watch --env-file .env --experimental-strip-types server.ts",
+    "db:seed": "node --env-file .env --experimental-strip-types src/database/seed.ts",
     "db:migrate": "npx drizzle-kit migrate",
     "db:generate": "npx drizzle-kit generate",
     "db:studio": "npx drizzle-kit studio"
@@ -23,6 +24,7 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.0.0",
     "@types/node": "^24.5.1",
     "drizzle-kit": "^0.31.4",
     "typescript": "^5.9.2"

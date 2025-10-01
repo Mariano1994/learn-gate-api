@@ -15,6 +15,20 @@
       "when": 1758387795175,
       "tag": "0001_redundant_mephistopheles",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1759355602767,
+      "tag": "0002_jazzy_sabra",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1759355732478,
+      "tag": "0003_woozy_sunspot",
+      "breakpoints": true
     }
   ]
 }

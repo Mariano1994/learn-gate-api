@@ -1,5 +1,6 @@
 
-import { timestamp } from 'drizzle-orm/pg-core'
+
+import { timestamp, uniqueIndex } from 'drizzle-orm/pg-core'
 import {pgTable, uuid, text} from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
@@ -19,4 +20,6 @@ export const enrollments = pgTable('enrollments', {
   userId: uuid().references(() => users.id),
   courseId: uuid().references(() => courses.id),
   createdAt: timestamp({withTimezone: true}).notNull().defaultNow()
-})
+}, (table) => [
+  uniqueIndex().on(table.userId, table.courseId)
+])

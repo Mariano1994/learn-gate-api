@@ -119,7 +119,7 @@ const enrollmentsInserted = await db.insert(enrollments).values([
   },
 
   
-])
+]).returning()
 }
 
 seed()

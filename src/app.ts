@@ -1,11 +1,11 @@
 import fastify from "fastify"
 import {serializerCompiler, validatorCompiler, type ZodTypeProvider, jsonSchemaTransform} from 'fastify-type-provider-zod'
 import {fastifySwagger} from '@fastify/swagger'
-import { getCoursesRoute } from "./src/routes/get-courses.ts"
-import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts"
-import { createCourseRoute } from "./src/routes/create-course.ts"
+import { getCoursesRoute } from "./routes/get-courses.ts"
+import { getCourseByIdRoute } from "./routes/get-course-by-id.ts"
+import { createCourseRoute } from "./routes/create-course.ts"
 
-import scalaAPIRefence from '@scalar/fastify-api-reference'
+import scalarAPIRefence from '@scalar/fastify-api-reference'
 
 
 const server = fastify().withTypeProvider<ZodTypeProvider>()
@@ -24,7 +24,7 @@ server.register(fastifySwagger, {
   transform: jsonSchemaTransform
 })
 
-server.register(scalaAPIRefence, {
+server.register(scalarAPIRefence, {
   routePrefix: '/docs',
   configuration: {
     theme: 'kepler'
@@ -39,28 +39,4 @@ server.register(getCoursesRoute)
 // Get an individual course, according to course id
 server.register(getCourseByIdRoute)
 
-
-
-
-// server.delete('/courses/:id', (request, replay) => {
-//   type Params = {
-//     id: string
-//   }
-
-//   const {id} = request.params as Params
-  
-//   const filteredCourses = courses.filter(course => course.id !== id)
-
-//   if(filteredCourses) {
-//     return {filteredCourses}
-//   }
-
-//   return replay.status(404).send('Couser not found')
-
-// })
-
-
-server.listen({port: 3333}).then(() => {
-  console.log('Server is running')
-})
-
+export { server }

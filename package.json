@@ -4,7 +4,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch --env-file .env --experimental-strip-types server.ts",
+    "dev": "node --watch --env-file .env --experimental-strip-types src/server.ts",
     "db:seed": "node --env-file .env --experimental-strip-types src/database/seed.ts",
     "db:migrate": "npx drizzle-kit migrate",
     "db:generate": "npx drizzle-kit generate",

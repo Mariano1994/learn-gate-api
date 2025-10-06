@@ -14,6 +14,7 @@ await server.ready()
     description: faker.lorem.paragraph()
   })
 
+
   expect(response.status).toEqual(201)
   expect(response.body).toEqual({
     courseId: expect.any(String)

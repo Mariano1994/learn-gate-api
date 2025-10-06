@@ -1,6 +1,7 @@
 import {test, expect} from 'vitest'
 import request from 'supertest'
 import { server } from '../app.ts'
+import { faker } from '@faker-js/faker'
 
 
 test('It should be able to create a course', async ()=> {
@@ -9,9 +10,12 @@ await server.ready()
   .post('/courses')
   .set('Content-Type', 'application/json')
   .send({
-    title: 'DAS Course',
-    description: 'This the ultimate aws course, that will take you from zero to hero'
+    title: faker.lorem.words(5),
+    description: faker.lorem.paragraph()
   })
 
-  console.log(response.body)
+  expect(response.status).toEqual(201)
+  expect(response.body).toEqual({
+    courseId: expect.any(String)
+  })
 })

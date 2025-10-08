@@ -6,6 +6,7 @@ import { getCourseByIdRoute } from "./routes/get-course-by-id.ts"
 import { createCourseRoute } from "./routes/create-course.ts"
 
 import scalarAPIRefence from '@scalar/fastify-api-reference'
+import { loginRoute } from "./routes/login.ts"
 
 
 const server = fastify().withTypeProvider<ZodTypeProvider>()
@@ -38,5 +39,7 @@ server.register(createCourseRoute)
 server.register(getCoursesRoute)
 // Get an individual course, according to course id
 server.register(getCourseByIdRoute)
+// Route to login the user
+server.register(loginRoute)
 
 export { server }

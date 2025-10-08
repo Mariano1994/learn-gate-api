@@ -8,7 +8,7 @@ test('Get a course by Id', async()=> {
 
   const course = await makeCourse()
   const response = await request(server.server)
-  .get(`/courses/${course.id}`)
+  .get(`/courses/${course.id}`) 
 
 
   expect(response.status).toEqual(200)

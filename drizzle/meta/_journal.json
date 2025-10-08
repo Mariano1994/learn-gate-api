@@ -36,6 +36,13 @@
       "when": 1759521381909,
       "tag": "0004_normal_black_cat",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1759919345379,
+      "tag": "0005_dry_nekra",
+      "breakpoints": true
     }
   ]
 }

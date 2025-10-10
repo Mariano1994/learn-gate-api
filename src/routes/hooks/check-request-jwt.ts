@@ -1,6 +1,11 @@
 import jwt from 'jsonwebtoken'
 import fastify from "fastify";
 
+type JWTPayload = {
+  sub: string,
+  role: 'student'|'manager'
+}
+
 
 
 export async function checkRequestJWT(request:fastify.FastifyRequest, reply:fastify.FastifyReply) {
@@ -16,8 +21,8 @@ export async function checkRequestJWT(request:fastify.FastifyRequest, reply:fast
   }
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET)
-    console.log(payload)
+    const payload = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload
+    request.user = payload
   } catch {
     return reply.status(401).send()
   }

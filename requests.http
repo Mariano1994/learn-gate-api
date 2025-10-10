@@ -1,8 +1,9 @@
 POST http://localhost:3333/courses
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmRhNWY5OS0zNWFjLTRmODEtYTg3Yy01MGY4ZDFjMzc0NmEiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc2MDA5MzY1MX0.7CpVtAGzpv6-CYmi2B8XWzEVU1M96u3pIm3spUvGwKY
 Content-Type: application/json
 
 {
- "title": "Angular",
+ "title": "Angular 101",
  "description": "This the ultimate aws course, that will take you from zero to hero"
 
 }
@@ -10,7 +11,7 @@ Content-Type: application/json
 GET http://localhost:3333/courses
 
 ### 
-GET http://localhost:3333/courses/3c662d72-0693-4d3f-8ad7-1dde8a41d901
+GET http://localhost:3333/courses/30c1e86b-5d3b-45c8-b7cf-588b7bd031c8
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmRhNWY5OS0zNWFjLTRmODEtYTg3Yy01MGY4ZDFjMzc0NmEiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc2MDA4OTc0NX0._CpePr8DR93aUGR9_soXcMSn1HR6m_EJZe5en2VW2fE
 
 ###

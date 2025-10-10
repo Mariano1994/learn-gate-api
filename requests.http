@@ -10,7 +10,8 @@ Content-Type: application/json
 GET http://localhost:3333/courses
 
 ### 
-GET http://localhost:3333/courses/80309d7c-d78c-4a50-b8d1-bd5e52142300
+GET http://localhost:3333/courses/3c662d72-0693-4d3f-8ad7-1dde8a41d901
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmRhNWY5OS0zNWFjLTRmODEtYTg3Yy01MGY4ZDFjMzc0NmEiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc2MDA4OTc0NX0._CpePr8DR93aUGR9_soXcMSn1HR6m_EJZe5en2VW2fE
 
 ###
 DELETE http://localhost:3333/courses/e8b0b632-b96d-4e0e-b8b0-b17870c47c24

@@ -3,9 +3,14 @@ import z from 'zod'
 import { db } from '../database/client.ts'
 import { courses } from '../database/schema.ts'
 import { eq } from 'drizzle-orm'
+import { checkRequestJWT } from './hooks/check-request-jwt.ts'
 
 export const getCourseByIdRoute: FastifyPluginAsyncZod = async(server) => {
-  server.get('/courses/:id',{schema: {
+  server.get('/courses/:id',{
+    preHandler:[
+      checkRequestJWT
+    ],
+    schema: {
     tags: ['courses'],
     summary: 'This route get a course by id from the database',
     description: 'This route is used to get an individual course on database, it receive an id and returns a course with the id especified',

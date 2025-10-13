@@ -9,6 +9,7 @@ Content-Type: application/json
 }
 ####
 GET http://localhost:3333/courses
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmRhNWY5OS0zNWFjLTRmODEtYTg3Yy01MGY4ZDFjMzc0NmEiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc2MDIwMDM4N30.eIvDHnULR8c2KkiKfno-RoAxXSp5EJzDBV4tGSEIp-c
 
 ### 
 GET http://localhost:3333/courses/30c1e86b-5d3b-45c8-b7cf-588b7bd031c8

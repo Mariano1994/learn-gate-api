@@ -10,7 +10,6 @@ kill_timeout = '5s'
   auto_rollback = true
 
 [build]
-  dockerfile = 'Dockerfile'
 
 [env]
   NODE_ENV = 'production'
@@ -31,11 +30,6 @@ kill_timeout = '5s'
     timeout = '5s'
     path = '/health'
 
-[machine]
-  memory = '512mb'
-  cpu_kind = 'shared'
-  cpus = 1
-
 [[vm]]
   memory = '512mb'
   cpu_kind = 'shared'
@@ -45,19 +39,5 @@ kill_timeout = '5s'
   release_command = 'pnpm db:migrate'
   strategy = 'rolling'
 
-[restart]
+[[restart]]
   policy = 'on-failure'
-
-# Uncomment and configure if you need a database
-# [[services]]
-# internal_port = 5432
-# protocol = "tcp"
-#
-#   [[services.ports]]
-#     handlers = ["pg_tls"]
-#     port = 5432
-#
-#   [services.concurrency]
-#     hard_limit = 25
-#     soft_limit = 20
-#     type = "connections"

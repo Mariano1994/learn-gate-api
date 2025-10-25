@@ -14,38 +14,7 @@ A modern REST API built with Fastify and TypeScript for managing courses. This A
 - **Modular Architecture**: Organized route structure for maintainability
 - **Request Validation**: Zod schema validation for all endpoints
 - **Docker Support**: Easy database setup with Docker Compose
-- **UUID Generation**: Unique identifiers for courses
-- **OpenAPI Specification**: Auto-generated API documentation
 
-## API Endpoints
-
-### Get All Courses
-```
-GET /courses
-```
-Returns a list of all available courses.
-
-### Create a New Course
-```
-POST /courses
-Content-Type: application/json
-
-{
-  "title": "Course Title",
-  "description": "Optional course description"
-}
-```
-Creates a new course with the provided title and optional description.
-- **Validation**: Title must be at least 5 characters
-- **Response**: Returns the generated course ID
-
-### Get Course by ID
-```
-GET /courses/:id
-```
-Returns a specific course by its unique ID.
-- **Validation**: ID must be a valid UUID
-- **Error Handling**: Returns 404 if course not found
 
 ### API Documentation
 ```
@@ -53,92 +22,11 @@ GET /docs
 ```
 Interactive API documentation powered by Scalar with Kepler theme.
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js (version 18 or higher)
-- pnpm (recommended) or npm
-- Docker and Docker Compose
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd learn-gate-api
-```
-
-2. Install dependencies:
-```bash
-pnpm install
-```
-
-3. Set up the database:
-```bash
-# Start PostgreSQL with Docker Compose
-docker compose up -d
-
-# Run database migrations
-pnpm db:migrate
-```
-
-### Running the Application
-
-1. Start the database (if not already running):
-```bash
-docker compose up -d
-```
-
-2. Start the development server:
-```bash
-pnpm dev
-```
-
-The server will start on `http://localhost:3333`
-
 ### Accessing the API Documentation
 
 Once the server is running, you can access the interactive API documentation at:
 - **API Docs**: `http://localhost:3333/docs`
 - **API Endpoints**: `http://localhost:3333/courses`
-
-### Database Configuration
-
-The application uses PostgreSQL 17 with the following configuration:
-- **Host**: localhost
-- **Port**: 5433
-- **Database**: learn_gate
-- **Username**: postgres
-- **Password**: learn-gate
-
-The database URL is configured in the `.env` file:
-```
-DATABASE_URL=postgresql://postgres:learn-gate@localhost:5433/learn_gate
-```
-
-## Project Structure
-
-```
-learn-gate-api/
-├── src/
-│   ├── database/
-│   │   ├── client.ts      # Database connection configuration
-│   │   └── schema.ts      # Database schema definitions
-│   └── routes/            # Modular API route handlers
-│       ├── create-course.ts    # POST /courses endpoint
-│       ├── get-courses.ts      # GET /courses endpoint
-│       └── get-course-by-id.ts # GET /courses/:id endpoint
-├── drizzle/               # Database migration files
-├── server.ts              # Main server file with plugin registration
-├── docker-compose.yml     # PostgreSQL database configuration
-├── drizzle.config.ts      # Drizzle ORM configuration
-├── .env                   # Environment variables
-├── package.json           # Project dependencies and scripts
-├── tsconfig.json          # TypeScript configuration
-├── requests.http          # HTTP request examples for testing
-└── README.md              # This file
-```
 
 ## Development
 
@@ -158,24 +46,7 @@ The project uses TypeScript with experimental strip types for development, allow
 - **Type Safety**: Full TypeScript support with Zod validation schemas
 - **Auto Documentation**: OpenAPI specification auto-generated from route schemas
 
-## Testing the API
-
-You can test the API using the provided `requests.http` file or any HTTP client like Postman, curl, or VS Code REST Client extension.
-
-## Sample Data
-
-The API comes with some initial course data:
-- ReactJS
-- NodeJS
-- DevOps
-- AWS Course
-
-## Error Handling
-
-- **400 Bad Request**: When creating a course with invalid data (title too short, missing required fields)
-- **404 Not Found**: When requesting a course that doesn't exist
-- **422 Unprocessable Entity**: When request validation fails (invalid UUID, schema validation errors)
-
+  
 ## Application Flow
 
 The following diagram illustrates the key flow of the Learn Gate API, showing how requests are processed through the modular architecture:
